@@ -15,7 +15,7 @@ const NOTES = [
     impact: [
       "500+ GPS signals/sec throughput",
       "Kafka event-driven pipelines",
-      "Optimized database queries (MySQL, Redis)"
+      "Optimized database queries (MySQL, Redis)",
     ],
     keywords: ["Java 17", "Spring Boot", "Kafka", "Microservices"],
   },
@@ -29,7 +29,7 @@ const NOTES = [
     impact: [
       "Real-time monitoring with alerts",
       "Custom dashboards for latency & throughput",
-      "SLA & incident response improvement"
+      "SLA & incident response improvement",
     ],
     keywords: ["Prometheus", "Grafana", "Monitoring", "Metrics"],
   },
@@ -102,7 +102,11 @@ export default function Notes() {
   }, [autoplay, activeNote]);
 
   return (
-    <section id="notes" className="max-w-7xl mx-auto px-6 py-20" aria-label="Notes & Insights">
+    <section
+      id="notes"
+      className="max-w-7xl mx-auto px-6 py-20"
+      aria-label="Notes & Insights"
+    >
       <motion.h2
         className="text-4xl md:text-5xl font-extrabold text-center bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent mb-16"
         initial={{ opacity: 0, y: -20 }}
@@ -117,9 +121,7 @@ export default function Notes() {
         <button
           onClick={() => setAutoplay(!autoplay)}
           className={`px-4 py-2 rounded-full font-medium ${
-            autoplay
-              ? "bg-emerald-500 text-white"
-              : "bg-gray-600 text-neutral-200"
+            autoplay ? "bg-emerald-500 text-white" : "bg-gray-600 text-neutral-200"
           }`}
         >
           Autoplay: {autoplay ? "On" : "Off"}
@@ -127,12 +129,19 @@ export default function Notes() {
       </div>
 
       {/* Carousel */}
-      <div className="relative flex justify-center items-center h-[300px]">
+      <div className="relative flex justify-center items-center h-[300px] overflow-hidden">
         {NOTES.map((note, idx) => {
-          const offset = ((idx - activeIndex + NOTES.length) % NOTES.length);
+          const offset = (idx - activeIndex + NOTES.length) % NOTES.length;
           const scale = offset === 0 ? 1 : 0.8;
           const opacity = offset === 0 ? 1 : 0.5;
-          const xOffset = offset === 0 ? 0 : offset === 1 ? 200 : offset === NOTES.length - 1 ? -200 : 0;
+          const xOffset =
+            offset === 0
+              ? 0
+              : offset === 1
+              ? 200
+              : offset === NOTES.length - 1
+              ? -200
+              : 0;
 
           return (
             <motion.div
@@ -142,6 +151,13 @@ export default function Notes() {
               animate={{ scale, opacity, x: xOffset }}
               transition={{ type: "spring", stiffness: 200, damping: 20 }}
               onClick={() => offset === 0 && setActiveNote(note)}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.2}
+              onDragEnd={(e, info) => {
+                if (info.offset.x > 50) prev();
+                if (info.offset.x < -50) next();
+              }}
             >
               {/* Tag */}
               <div
@@ -161,16 +177,16 @@ export default function Notes() {
           );
         })}
 
-        {/* Navigation Arrows */}
+        {/* Navigation Arrows (hidden on mobile) */}
         <button
           onClick={prev}
-          className="absolute left-0 top-1/2 -translate-y-1/2 text-white/70 hover:text-white text-2xl px-3 py-1"
+          className="hidden md:flex absolute left-2 top-1/2 -translate-y-1/2 text-white/70 hover:text-white text-3xl w-12 h-12 items-center justify-center z-20"
         >
           ◀
         </button>
         <button
           onClick={next}
-          className="absolute right-0 top-1/2 -translate-y-1/2 text-white/70 hover:text-white text-2xl px-3 py-1"
+          className="hidden md:flex absolute right-2 top-1/2 -translate-y-1/2 text-white/70 hover:text-white text-3xl w-12 h-12 items-center justify-center z-20"
         >
           ▶
         </button>
