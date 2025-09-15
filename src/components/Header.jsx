@@ -1,6 +1,7 @@
 // src/components/Header.jsx
 import React, { useState, useRef, useEffect } from "react";
 import { FileDown, Menu, X } from "lucide-react";
+import {motion} from "framer-motion";
 
 const NAV = [
   { href: "#projects", label: "Projects" },
