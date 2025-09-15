@@ -62,7 +62,7 @@ export default function Contact() {
       </div>
 
       {/* Collapsible Contact Form */}
-      {/* <div className="text-center mb-10">
+      <div className="text-center mb-10">
         <button
           onClick={() => setShowForm(!showForm)}
           className="px-6 py-3 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-medium shadow-md hover:brightness-110 transition"
@@ -95,7 +95,7 @@ export default function Contact() {
             Send
           </button>
         </form>
-      )} */}
+      )}
 
       {/* Footer Microcopy */}
       <div className="text-center mt-12 text-neutral-400 text-sm">
